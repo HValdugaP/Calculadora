@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake</title>
+</head>
+<body>
+    
+    <canvas id="stage" width="400" height="400"></canvas> <!-- tela -->
+    <script type="text/javascript">
+
+        window.onload = function(){ //carrega a janela do jogo
+
+            var stage = document.getElementById('stage'); // pega o elemento do html(canvas)
+            var ctx = stage.getContext("2d"); // context da tela (onde é feita a parte visual)
+            document.addEventListener ("keydown", keyPush); // ação da cobra (pressionar botão)
+            setInterval(game, 60); //a cada 60 milisegundos chama a função jogo
+
+            //!!!variáveis!!!
+            const vel = 0.5; //velocidade inicial da cobra
+
+            var vx = vy = 0; // velocidades vertical / horizontal iniciais
+            var px = 10; //ponto de inicio
+            var py = 15; // ||
+            var lp = 20; // tamanho do quadrado do canvas em que vai ser dividido o stage 
+            var qp = 20; // quantidade de quadrados do canvas
+            var ax = ay = 15; // posição inicial maçã
+
+            var trail = []; // rastro inicial da cobra
+            tail = 5; // tamanho inicial da cobra
+
+            // estrutura do jogo
+            function game(){
+                px += vx; 
+                py += vy;
+
+                //infinidade das laterais do quadro
+                if(px < 0){ 
+                    px = qp-1;
+                }
+                if(px > qp-1){ 
+                    px = 0;
+                }
+                if(py < 0){ 
+                    py = qp-1;
+                }
+                if (py > qp-1){ 
+                    py = 0;
+                }
+                
+                ctx.fillStyle = "black"; // cor do quadro
+                ctx.fillRect (0,0, stage.width, stage.height); // pinta o quadro
+
+                ctx.fillStyle = "red"; // cor da maçã
+                ctx.fillRect (ax*lp, ay*lp, lp,lp); // pinta a maçã
+
+                ctx.fillStyle = "blue"; // cor da cobra
+                for (var i = 0; i < trail.length; i++){ // verifica o tamanho da cobra e aumenta quando passa pela maçã
+                    ctx.fillRect (trail[i].x*lp, trail[i].y*lp, lp,lp);
+                    
+                    if(trail[i].x == px && trail[i].y == py){ // verifica se a cabeça da cobra bateu na cauda
+                        vx = vy = 0; // se a cabeça e a cauda estiverem no mesmo local a cobra para
+                    }
+                }
+
+                trail.push({x:px, y:py}); // movimento da cobra caso não tenha batido na cauda
+                while(trail.length > tail){ // se o rastro for maior que a cauda, tira o primeiro elemento do array
+                    trail.shift();
+                }
+
+                if (ax==px && ay==py){ // determina o aumento do tamanho da cauda da cobra
+                    tail++;
+                    ax = Math.floor(Math.random()*qp); // muda a maçã de local após a cobra passar por cima
+                    ay = Math.floor(Math.random()*qp); // ||
+                }
+            }
+
+            // faz a cobra se mexer
+            function keyPush(event){
+
+                switch(event.keyCode){
+                    case 37: // move a cobra pra esquerda
+                        vx = -vel;
+                        vy = 0;
+                        break;
+                    case 38: // move a cobra pra cima
+                        vx = 0;
+                        vy = -vel;
+                        break;
+                    case 39: // move a cobra pra direita
+                        vx = vel;
+                        vy = 0;
+                        break;
+                    case 40: // move a cobra pra baixo
+                        vx = 0;
+                        vy = vel;
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+
+        
+        }
+
+    </script>
+    
+</body>
+</html>

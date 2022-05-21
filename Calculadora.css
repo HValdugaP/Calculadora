@@ -1,0 +1,71 @@
+*{
+    padding:0;
+    margin:0;
+    outline: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: rgb(0, 146, 190);
+}
+
+input{
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+}
+
+input[type=text]{
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    height: 50px;
+    width: calc(100% - 20px);
+}
+
+input[type=button]{
+    width: 100px;
+    height: 50px;
+    transition: ease 0.3s;
+}
+
+input[type=button]:hover{
+    filter: brightness(50%);
+}
+
+input[type=button]:active{
+    transform: scale(0.2);
+}
+
+div#calculadora{
+    box-shadow: 0 0 10px black;
+    background: black;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+div#calculadora div{
+    display: flex;
+}
+
+div#quarta input:nth-child(1){
+    background: rgb(255, 0, 0);
+    border-bottom-left-radius: 20px;
+}
+
+div#quarta input:nth-child(3){
+    background: rgb(0, 255, 0);
+}
+
+div#quarta input:nth-child(4){
+    border-bottom-right-radius: 20px;
+}
+
+div#calculadora div input:nth-child(4){
+    background: #b4b4b4;
+}
